@@ -14,7 +14,8 @@
 * Proper error message in the case ADMIN has yet not approved/rejected the registration request
 
 ## How is the code organized in this repo ?
-The whole repo is divided into multiple branches. Each branch contains code for a specific concept. For example session1 has the code base for user registration and login . Each branch is built on the top of the previous branch
+The whole repo is divided into multiple branches. Each branch contains code for a specific concept. 
+For example session1 has the code base for user registration and login . Each branch is built on the top of the previous branch
 
 ## Prerequisite
 - Understanding of Node.js
@@ -36,21 +37,20 @@ Before starting the server please ensure mongodb server is locally installed and
 - npm run devStart
 
 ## Rest endpoints
-1. Sign Up request
 POST /crm/api/v1/auth/signup
 Sample request body :
 {
-        "name": "Ajay",
-        "userId": "ajay07",
+        "name": "Vishwa",
+        "userId": "Vish07",
         "email" : "abc@xyz.com",
         "password" : "Welcome1",
         "userType" : "ENGINEER"
 }
 
-- Sample response body :
+Sample response body :
 {
-    "name": "Ajay",
-    "userId": "ajay07",
+    "name": "Vishwa",
+    "userId": "Vish07",
     "email": "abc@xyz.com",
     "userTypes": "ENGINEER",
     "userStatus": "PENDING",
@@ -84,3 +84,5 @@ Sample request body :
     "userStatus": "APPROVED",
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlZpc2gwMSIsImlhdCI6MTY0NTMzMjg3NiwiZXhwIjoxNjQ1NDE5Mjc2fQ.21IRt9VIL-suvP7Z_lamH1PcchOB1TJOhZPSpX9kqt8"
 }
+
+
