@@ -38,25 +38,25 @@ Before starting the server please ensure mongodb server is locally installed and
 
 ## Rest endpoints
 POST /crm/api/v1/auth/signup
-Sample request body :
-{
-        "name": "Vishwa",
-        "userId": "Vish07",
-        "email" : "abc@xyz.com",
-        "password" : "Welcome1",
-        "userType" : "ENGINEER"
-}
-
-Sample response body :
-{
-    "name": "Vishwa",
-    "userId": "Vish07",
-    "email": "abc@xyz.com",
-    "userTypes": "ENGINEER",
-    "userStatus": "PENDING",
-    "createdAt": "2022-02-20T04:47:43.842Z",
-    "updatedAt": "2022-02-20T04:47:43.842Z"
-}
++Sample request body :
++{
++        "name": "Vishwa",
++        "userId": "Vish07",
++        "email" : "abc@xyz.com",
++        "password" : "Welcome1",
++        "userType" : "ENGINEER"
++}
++
++Sample response body :
++{
++    "name": "Vishwa",
++    "userId": "Vish07",
++    "email": "abc@xyz.com",
++    "userTypes": "ENGINEER",
++    "userStatus": "PENDING",
++    "createdAt": "2022-02-20T04:47:43.842Z",
++    "updatedAt": "2022-02-20T04:47:43.842Z"
++}
 
 * Details about the JSON structure
 
@@ -85,8 +85,3 @@ Sample request body :
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlZpc2gwMSIsImlhdCI6MTY0NTMzMjg3NiwiZXhwIjoxNjQ1NDE5Mjc2fQ.21IRt9VIL-suvP7Z_lamH1PcchOB1TJOhZPSpX9kqt8"
 }
 
-{
-++++++"name" : "ajay",
-++++++"userId : "ajay07",
-++++++"email": "abc@xyz.com"
-}
