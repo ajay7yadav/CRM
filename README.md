@@ -85,4 +85,8 @@ Sample request body :
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlZpc2gwMSIsImlhdCI6MTY0NTMzMjg3NiwiZXhwIjoxNjQ1NDE5Mjc2fQ.21IRt9VIL-suvP7Z_lamH1PcchOB1TJOhZPSpX9kqt8"
 }
 
-
+{
+++++++"name" : "ajay",
+++++++"userId : "ajay07",
+++++++"email": "abc@xyz.com"
+}
