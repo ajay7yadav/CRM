@@ -38,17 +38,17 @@ Before starting the server please ensure mongodb server is locally installed and
 
 ## Rest endpoints
 POST /crm/api/v1/auth/signup
-+ Sample request body :
-+ {
++Sample request body :
++{
 +        "name": "Vishwa",
 +        "userId": "Vish07",
 +        "email" : "abc@xyz.com",
 +        "password" : "Welcome1",
 +        "userType" : "ENGINEER"
-+ }
++}
 +
-Sample response body 
-+ {
++Sample response body :
++{
 +    "name": "Vishwa",
 +    "userId": "Vish07",
 +    "email": "abc@xyz.com",
@@ -56,7 +56,7 @@ Sample response body
 +    "userStatus": "PENDING",
 +    "createdAt": "2022-02-20T04:47:43.842Z",
 +    "updatedAt": "2022-02-20T04:47:43.842Z"
-+ }
++}
 
 * Details about the JSON structure
 
@@ -68,12 +68,11 @@ userType : Optional, default value is CUSTOMER. Other possible value : ADMIN | E
 userStatus : It reperesents the status of the user registered. Customer are by default approved. ADMIN and Engineers need approval from Admin. Possible values : APPROVED | PENDING | REJECTED
 
 2. Login request
-POST /crm/api/v1/auth/signin
-Sample request body :
-{
-        "userId": "ajay07",
-        "password" : "Welcome1"
-    
+- POST /crm/api/v1/auth/signin
++ Sample request body 
++ {
++       "userId": "ajay07"
++       "password" : "Welcome1"
 }
 - Sample response body :
 {
