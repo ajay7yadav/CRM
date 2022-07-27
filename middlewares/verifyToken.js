@@ -12,18 +12,17 @@ const verifyToken = (req,res,next)=>{
         });
         return;
     }
-    if(headers){
-        jwt.verify(headers,Key.Secrate,(err,decode)=>{
-            if(err){
-                res.status(400).send({
-                    message : "Invaild accessToken, !"
-                });
-                return;
-            }
-            req.userId = decode.id;
-            next();
-        });
-    }
+    
+    jwt.verify(headers,Key.Secrate,(err,decode)=>{
+        if(err){
+            res.status(404).send({
+                message : "Invaild accessToken, !"
+            });
+            return;
+        }
+        req.userId = decode.id; // here i am storing decode token id in req.userId Object 
+        next();
+    });
 }
 
 // Handler for verifing user is admin or not
@@ -37,10 +36,31 @@ const isAdmin = async(req, res, next)=>{
             res.status(403).send({
                 message : "Only Admin user access !"
             });
+        }
+}
+const isAdminOrOwner = async(req, res, next)=>{
+    // Either the caller should be the ADMIN 
+    // Or call should be Owner of the userId
+    try{
+        const callingUser = await User.findOne({userId : req.userId});
+        if(callingUser.userType == canstant.userType.admin || callingUser.userId == req.params.id){
+            next();
+        }
+        else{
+            res.status(403).send({
+                message : "You can not access another profile only Admin or owner of the id !"
+            });
             return;
         }
+    }catch(err){
+        res.status(500).send({
+            message : "Internal error while reading the user info !"
+        });
+        return;
+    }
 }
 module.exports = {
     token : verifyToken,
-    isAdmin : isAdmin
+    isAdmin : isAdmin,
+    isAdminOrOwner : isAdminOrOwner
 }

@@ -47,15 +47,15 @@ exports.signin = async(req, res)=>{
 
         const users = await Auth.findOne({email : emails});
         if(!users){
-            res.status(403).send({
-                message : "email is not valid !"
+            res.status(400).send({
+                message : "Failed ! email does not exist"
             });
             return;
         }
         // verifying password with current user
         let pass = bcrypt.compareSync(req.body.password,users.password);
         if(!pass){
-            res.status(403).send({
+            res.status(400).send({
                 message : "password is not matched, please enter valid password !"
             });
             return;
@@ -65,7 +65,7 @@ exports.signin = async(req, res)=>{
             return res.status(401).send({ message : "You are approved for login"});
         }
         // accessToken :      id(header) | key(secrate key) | time (200 sec)
-        let token = jwt.sign({id : users.id},Key.Secrate,{expiresIn : 200});
+        let token = jwt.sign({id : users.userId},Key.Secrate,{expiresIn : 200});
         res.status(200).send({
             message : "Welcome "+users.name,
             AccessToken : token
@@ -73,8 +73,8 @@ exports.signin = async(req, res)=>{
 
     }catch(err){
         console.log(err.message);
-        res.status(403).send({
-            message : "Internal will happined !"
+        res.status(500).send({
+            message : "Internal error while signin !"
         });
     }
 };

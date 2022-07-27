@@ -1,5 +1,4 @@
 // This file will have all the logic to manipulate users resource
-
 /** 
  * Fetch the list of all users
  *  - Only Admin is allowed to call this method 
@@ -11,64 +10,30 @@
 const User = require('../models/auth_m');
 const object = require('../util/objectConvert');
 // Only Admin should know how many users are in the application
+
+// Here i am fetching ALL or using by query?userStatus=PENDING
 exports.findAllUsers = async(req, res)=>{
-    try{
-        // Find users from users collection
-        const users = await User.find();
-        // tranfer details and fetch all the users details
-        res.status(200).send(object.userResponse(users));
-
-    }catch(err){
-        console.log(err.message);
-        res.status(500).send({
-            message : "Internal error !"
-        })
-    }
-}
-
-// Here i am fetching using by query
-exports.findByQuery = async(req, res)=>{
     let query = {};
-    let name = req.query.name;
+    // Reading the optional query params
+    
     let userStatus = req.query.userStatus;
     let userType = req.query.userStatus;
     
-    if(name && userStatus && userType){
-        console.log("1st If");
-        query.name = name;
-        query.userStatus = userStatus;
-        query.userType = userType;
-    }else if(name && userStatus){
-        console.log("2st If");
-        query.name = name;
+    if(userStatus){
         query.userStatus = userStatus;
     }
-    else if(name && userType){
-        console.log("3st If");
-        query.name = name;
-        query.userType = userType;
-    }
-    else if(userStatus && userType){
-        console.log("4st If");
-        query.userStatus = userStatus;
-        query.userType = userType;
-    }
-    else if(name){
-        console.log("5st If");
-        query.name = name;
-    }
-    else if(userStatus){
-        console.log("6st If");
-        query.userStatus = userStatus;
-    }
-    else if(userType){
-        console.log("7st If");
+    
+    if(userType){
         query.userType = userType;
     }
     try{
 
         const users = await User.find(query);
-        console.log(users);
+        if(!users){
+            return res.status(404).send({
+                message : "userId does not exist !"
+            });
+        }
         res.status(200).send(object.userResponse(users));
 
     }catch(err){
@@ -76,12 +41,58 @@ exports.findByQuery = async(req, res)=>{
         console.log(err.message);
         res.status(500).send({
             message : "queries internal not work "
-        })
-
+        });
     }
 }
 
-// Find User byId 
-exports.findById = (req, res)=>{
-    
+// Find User by /:id 
+exports.findById = async(req, res)=>{
+    try{
+        const users = await User.findOne({userId : req.params.id});
+        if(!users){
+            return res.status(404).send({
+                message : "userId does not exist !"
+            })
+        }
+        res.status(200).send({
+            name : users.name,
+            userId : users.userId,
+            email : users.email,
+            userType : users.userType,
+            userStatus : users.userStatus
+        });
+
+    }catch(err){
+        console.log(err.message);
+        res.status(500).send({
+            message : "internal server error ! "
+        })
+    }
+}
+
+// Update by /:id
+exports.update = async(req, res)=>{
+    try {
+        const user = await User.findOne({userId : req.params.id});
+                    //  if user we get req                     take req            else no changes          
+        user.userStatus = req.body.userStatus != undefined ? req.body.userStatus : user.userStatus
+        user.name = req.body.name != undefined ? req.body.name : user.name
+        user.userType = req.body.userType != undefined ? req.body.userType : user.userType
+
+        const updatedUser = await user.save();
+
+        res.status(200).send({
+            name : updatedUser.name,
+            userId : updatedUser.userId,
+            email : updatedUser.email,
+            userType : updatedUser.userType,
+            userStatus : updatedUser.userStatus
+        })
+    } catch(err){
+        console.log("Error while DB operation",err.message);
+        res.status(500).send({
+            message : "Internal server error !"
+        })
+    }
+
 }

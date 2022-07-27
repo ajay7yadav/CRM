@@ -1,4 +1,4 @@
-// i waill have the logic to tranfer the onject
+// i will have the logic to tranfer the object
 
 exports.userResponse = (users)=>{
     let userResponse = [];
