@@ -50,6 +50,34 @@ const validRegistration = async(req,res,next)=>{
         });
         return;
     }
+    // check password is strong or not
+    let value = req.body.password
+    if(value){
+        const isNonWhiteSpace = /^\S*$/;
+        if (!isNonWhiteSpace.test(value)) {
+            return res.status(400).send({message : "Password must not contain Whitespaces"});
+        }
+        const isContainsUppercase = /^(?=.*[A-Z]).*$/;   
+        if (!isContainsUppercase.test(value)) {
+            return res.status(400).send({message : "Password must have at least one Uppercase Character"});
+        }
+        const isContainsLowercase = /^(?=.*[a-z]).*$/;
+        if (!isContainsLowercase.test(value)) {
+            return res.status(400).send({message : "Password must have at least one Lowercase Character."});
+        }
+        const isContainsNumber = /^(?=.*[0-9]).*$/;
+        if (!isContainsNumber.test(value)) {
+            return res.status(400).send({message : "Password must contain at least one Digit."});
+        }
+        const isContainsSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/;
+        if (!isContainsSymbol.test(value)) {
+            return res.status(400).send({message : "Password must contain at least one Special Symbol."});
+        }
+        const isValidLength = /^.{6,}$/;
+        if (!isValidLength.test(value)) {
+            return res.status(400).send({message : "Password must be 6 - 10 Characters Long."});
+        }
+    }
     // check userType field
     let userType = req.body.userType;
     if(userType == util.userType.admin){
@@ -85,7 +113,9 @@ const validateSignInRequestBody = (req, res, next) => {
 
     next();
 }
-module.exports = {
-    valid : validRegistration,
-    validSignUp : validateSignInRequestBody
+
+const auth = {
+    validSignUp : validRegistration,
+    validSignIn : validateSignInRequestBody
 }
+module.exports = auth;

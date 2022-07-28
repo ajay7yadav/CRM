@@ -14,10 +14,11 @@ const bcrypt = require('bcryptjs');
 mongoose.connect(dbConfig.DB_URL,()=>{
     console.log("mongoDB connected");
     defaultCreate();
-})
+});
 // Create ADMIN 
 async function defaultCreate(){
     try {
+        // clean my user collection for better experience
         await User.collection.drop();
         const admin = await User.create({
             name : "admin",
@@ -35,6 +36,7 @@ async function defaultCreate(){
 }
 require('./routes/auth_API')(app);
 require('./routes/users_API')(app);
+require('./routes/ticket_API')(app);
 
 app.listen(serverConfig.PORT,()=>{
     console.log("server start at port",serverConfig.PORT);

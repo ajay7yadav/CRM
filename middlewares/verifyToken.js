@@ -59,8 +59,10 @@ const isAdminOrOwner = async(req, res, next)=>{
         return;
     }
 }
-module.exports = {
+
+const jwtOrAdmin = {
     token : verifyToken,
     isAdmin : isAdmin,
     isAdminOrOwner : isAdminOrOwner
 }
+module.exports = jwtOrAdmin;

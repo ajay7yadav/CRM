@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const constants = require('../util/constant');
 
-const auth = new mongoose.Schema({
+const User = new mongoose.Schema({
     name : {
         type : String,
         required : true
@@ -42,7 +42,17 @@ const auth = new mongoose.Schema({
         default : ()=>{
             return Date.now();
         }
+    },
+    // user create these tickets
+    ticketsCreated : {
+        type : [mongoose.SchemaTypes.ObjectId],  // A user create Many tickets
+        ref : "ticket"
+    },
+    // to engineer assigned these tickets
+    ticketsAssigned : {
+        type : [mongoose.SchemaTypes.ObjectId], // An Engineer assigned Many tickets
+        ref : "ticket"
     }
 });
 
-module.exports = mongoose.model('auth',auth);
+module.exports = mongoose.model('users',User);
