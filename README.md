@@ -35,3 +35,55 @@ Before starting the server please ensure mongodb server is locally installed and
 - cd crm_backend
 - npm install
 - npm run devStart
+
+
+## User Registration
+- Post Request
+{
+        "name" : "Ram",
+        "userId" : "ram",
+        "email" : "ram@gmail.com",
+        "password" : "aaA1@aa",
+        "userType" : "CUSTOMER"
+}
+- Response from server
+{
+    "name": "Ram",
+    "userId": "ram",
+    "email": "ram@gmail.com",
+    "userType": "CUSTOMER",
+    "userStatus": "APPROVED"
+}
+## User Signin
+- Post Request
+{
+    "email" : "ram@gmail.com",
+    "password" : "aaA1@aa"
+}
+- Response from server
+{
+    "message": "Welcome Ram",
+    "AccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InJhbSIsImlhdCI6MTY1OTUzMTIyNSwiZXhwIjoxNjU5NTMxNDI1fQ.NNQJOx1qhcC4Gt810SRNqzKAwMxGs7ocNZwbXdyLqCg"
+}
+- You get accessToken with help access Token you can create Token
+- Same as Engineer register himself but he can login when ADMIN approved him then he login himself
+
+## Ticket
+- create ticket
+{
+    "title" : "my love",
+    "description" : " you never love me its one side love "
+}
+
+- Response from server
+{
+    "title": "my love",
+    "ticketPriority": 4,
+    "description": " you never love me its one side love ",
+    "status": "OPEN",
+    "reporter": "ram",
+    "assignee": "ram2",
+    "_id": "62ea706341725dae26dc7463",
+    "createdAt": "2022-08-03T12:56:03.174Z",
+    "updatedAt": "2022-08-03T12:56:03.174Z"
+}

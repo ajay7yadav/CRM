@@ -1,6 +1,7 @@
 const Ticket = require('../models/ticket_m');
 const User = require('../models/auth_m');
 const constants = require('../util/constant');
+const sendNotificationReq = require('../util/notificationClient')
 /**
  * Method to create the logic of creating tickets
  * 
@@ -64,6 +65,12 @@ exports.createTicket = async(req, res)=>{
                 assigneTo.ticketsAssigned.push(tickets.id);
                 await assigneTo.save();
             }
+            // after notification service
+            //Now we should send the notification request to notificationService
+            /**
+             * Enrich the content of the email content
+             */
+            sendNotificationReq(`Ticket created with Id : ${tickets._id} `,"Yay ! CRM ticket has been booked",`${tickets.reporter},${tickets.assignee},ajay7yadav95@gmail.com`,"CRM APP");
             res.status(201).send(tickets);
         }
     }catch(err){
