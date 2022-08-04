@@ -26,7 +26,7 @@ The whole repo is divided into multiple branches. Each branch contains code for 
 - Understanding of Async Await
 - Mongo DB locally installed and running
 
-### Tech
+## 🛠 Tech
 - Node.js
 - MongoDB
 - this app requires Node.js v14+ to run.
