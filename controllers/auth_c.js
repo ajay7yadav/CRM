@@ -66,8 +66,11 @@ exports.signin = async(req, res)=>{
         }
         // accessToken :      id(header) | key(secrate key) | time (200 sec)
         let token = jwt.sign({id : users.userId},Key.Secrate,{expiresIn : 200});
+        
         res.status(200).send({
             message : "Welcome "+users.name,
+            userId : users.userId,
+            userType : users.userType,
             AccessToken : token
         });
 

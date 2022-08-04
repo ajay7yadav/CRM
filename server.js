@@ -19,7 +19,7 @@ mongoose.connect(dbConfig.DB_URL,()=>{
 async function defaultCreate(){
     try {
         // clean my user collection for better experience
-        // await User.collection.drop();
+        await User.collection.drop();
         const admin = await User.create({
             name : "admin",
             userId : "admin1",

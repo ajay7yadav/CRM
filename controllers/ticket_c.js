@@ -1,7 +1,7 @@
 const Ticket = require('../models/ticket_m');
 const User = require('../models/auth_m');
 const constants = require('../util/constant');
-const sendNotificationReq = require('../util/notificationClient')
+const sendNotificationReq = require('../util/notificationClient');
 /**
  * Method to create the logic of creating tickets
  * 
@@ -30,7 +30,7 @@ exports.createTicket = async(req, res)=>{
             userStatus : constants.userStatus.approved
         });
     
-        // find which engineer has less ticket assigned
+        // find which engineer has less ticket assigned him
         let min = Infinity;
         let assigneTo;
         for(let i=0;i<engineer.length; i++){
@@ -42,7 +42,7 @@ exports.createTicket = async(req, res)=>{
         if(assigneTo){
             ticketObj.assignee = assigneTo.userId
         }
-        // No any engineer in database
+        // if No any engineer in database
         else{
             return res.status(404).send({
                 message : "No any engineer at the time aviable, please try some time latter"
@@ -65,12 +65,11 @@ exports.createTicket = async(req, res)=>{
                 assigneTo.ticketsAssigned.push(tickets.id);
                 await assigneTo.save();
             }
-            // after notification service
-            //Now we should send the notification request to notificationService
-            /**
-             * Enrich the content of the email content
-             */
-            sendNotificationReq(`Ticket created with Id : ${tickets._id} `,"Yay ! CRM ticket has been booked",`${tickets.reporter},${tickets.assignee},ajay7yadav95@gmail.com`,"CRM APP");
+            
+            // Now we should send the notification request to notification Service
+            // rich the content of the email content
+            //                        subject with id                          content to sent          recepients || current user || engineer || admin           who sent request        
+            sendNotificationReq(`Ticket created with id : ${tickets._id}` , "CRM ticket has been booked",`${customer.email},${assigneTo.email},ajay7yadav95@gmail.com`, "CRM APP");
             res.status(201).send(tickets);
         }
     }catch(err){
@@ -95,27 +94,23 @@ exports.getAllTickets = async(req, res)=>{
         const ticketAssigned = user.ticketsAssigned ; // this is also an array of ticket _id
     
         if(user.userType == constants.userType.customer){
-           /**
-            *    Query for fetching all the tickets created by the user
-            * 
-            * */ 
+           
             if(!ticketCreated){
                 return res.staus(200).send({
                     message : "No tickets created by the user yet"
                 });
             };
+        // Query for fetching all the tickets created by the user
         //get all tickets from array    = {"_id" : {$in :["id1","id2","id3"]}}
             queryObj["_id"] = { $in : ticketCreated};
     
         }else if(user.userType == constants.userType.engineer){
-            /**
-             * Query object for fetching all the tickets assigned/created to a user
-             */
             if(!ticketAssigned){
                 return res.staus(200).send({
                     message : "You have No any tickets assigned "
                 });
             }
+            // Query object for fetching all the tickets assigned/created to a user
             // query object       get own tickets                    get assigned tickets
             queryObj["$or"] = [{"_id" : {$in : ticketCreated}},{"_id" : {$in : ticketAssigned}}];
         }

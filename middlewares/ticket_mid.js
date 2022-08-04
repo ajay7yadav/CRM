@@ -2,11 +2,11 @@ const User = require('../models/auth_m');
 const Ticket = require('../models/ticket_m');
 const constants = require('../util/constant');
 const verifyTicketBody = (req, res, next)=>{
-
+    // check title field
     if(!req.body.title){
         return res.status(400).send({message : "please enter title"});
     }
-
+    // check description field
     if(!req.body.description){
         return res.status(400).send({message : "please enter description"});
     }
@@ -41,7 +41,6 @@ const verifyUpdateCheck = async(req, res, next)=>{
     * If the update requires the change in the assignee | change Engineer
     * 
     *    1. Only ADMIN should be allowed to do this change
-    *    2. Assignee should be a valid Engineer
     */
    
    if(req.body.assignee != undefined){

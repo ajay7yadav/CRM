@@ -93,18 +93,18 @@ const validRegistration = async(req,res,next)=>{
         });
         return;
     }
-    next(); // Give contol to the next middleware or controller
+    next(); // Give control to the next middleware or controller
     
 }
 const validateSignInRequestBody = (req, res, next) => {
     
-    // Validate if the userId is present 
+    // Validate if the email is present 
     if (!req.body.email) {
         return res.status(400).send({
             message: "Failed ! email is not provided"
         });
     }
-
+    // Validate if the password is present
     if (!req.body.password) {
         return res.status(400).send({
             message: "Failed ! Password is not provided"
