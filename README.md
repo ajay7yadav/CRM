@@ -1,89 +1,149 @@
-# CRM App backend
-## Learning the development of RESTful APIs for backend
-+ This code base contains logic/structure for creating the Restful APIs for the CRM app
 
-## Features
-* User Registration and User Login
-* Admin registration will be from the backend directly. No API support for the ADMIN user creation
-* Engineer registration will be supported through API, but it needs to be approved by the ADMIN
-* Customer registration will be supported through API with no approval needed from the ADMIN
-* API to support the ADMIN login. Login API call should return the access token, which will be used to make all the other calls
-* API to support the CUSTOMER login. Login API call should return the access token, which will be used to make all the other calls
-* API to support the ENGINEER login. Login API call should return the access token, which will be used to make all the other calls. 
-* Login API will succeed only if the ENGINEER registration request has been approved by the ADMIN. 
-* Proper error message in the case ADMIN has yet not approved/rejected the registration request
+## CRM App backend
+### (Customer relationship management)
+- In this application customer should be able to raise the issue and track it .
 
-## How is the code organized in this repo ?
-The whole repo is divided into multiple branches. Each branch contains code for a specific concept. 
-For example session1 has the code base for user registration and login . Each branch is built on the top of the previous branch
+### Features
+- User Registration and Login himself
+- Admin registration will be from the backend directly. No API support for the ADMIN user creation
+- Engineer registration will be supported through API, but it needs to be approved by the ADMIN
 
-## Prerequisite
+- Customer registration will be supported through API with no approval needed from the ADMIN
+- API to support the ADMIN login. Login API call should return the access token, which will be used to make all the other calls
+- API to support the CUSTOMER login. Login API call should return the access token, which will be used to make all the other calls
+
+- API to support the ENGINEER login. Login API call should return the access token, which will be used to make all the other calls.
+- Login API will succeed only if the ENGINEER registration request has been approved by the ADMIN.
+
+- Proper error message in the case ADMIN has yet not approved/rejected the registration request
+- Proper validation if User Post empty request.
+
+### How is the code organized in this repo ?
+The whole repo is divided into multiple branches. Each branch contains code for a specific concept. For example session1 has the code base for user registration and login . Each branch is built on the top of the previous branch
+
+### Prerequisite
 - Understanding of Node.js
 - Understanding of Async Await
 - Mongo DB locally installed and running
 
-## Tech
+### Tech
 - Node.js
-- Mongodb
-- Installation
+- MongoDB
 - this app requires Node.js v14+ to run.
 
-## Install the dependencies and devDependencies and start the server.
-
+### Install the dependencies and devDependencies and start the server.
 Before starting the server please ensure mongodb server is locally installed and running on the default port
 
-- cd crm_backend
+- cd crm
 - npm install
 - npm run devStart
 
-
-## User Registration
-- Post Request
+## REST endpoints
+### Customer 
+- Signup 
+``` 
+localhost:8081/crm/app/v1/auth/signup
+Sample request body :
 {
-        "name" : "Ram",
-        "userId" : "ram",
+        "name" : "Ram kumar",
+        "userId" : "ram1",
         "email" : "ram@gmail.com",
-        "password" : "aaA1@aa",
+        "password" : "welcom@A7",
         "userType" : "CUSTOMER"
 }
-- Response from server
+Sample response body :
 {
-    "name": "Ram",
-    "userId": "ram",
+    "name": "Ram kumar",
+    "userId": "ram1",
     "email": "ram@gmail.com",
     "userType": "CUSTOMER",
     "userStatus": "APPROVED"
 }
-## User Signin
-- Post Request
+```
+- Signin 
+```
+localhost:8081/crm/app/v1/auth/signin
+Sample request body :
 {
     "email" : "ram@gmail.com",
-    "password" : "aaA1@aa"
+    "password" : "welcom@A7"
 }
-- Response from server
+Sample response body :
 {
-    "message": "Welcome Ram",
-    "AccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InJhbSIsImlhdCI6MTY1OTUzMTIyNSwiZXhwIjoxNjU5NTMxNDI1fQ.NNQJOx1qhcC4Gt810SRNqzKAwMxGs7ocNZwbXdyLqCg"
+    "message": "Welcome Ram kumar",
+    "userId": "ram1",
+    "userType": "CUSTOMER",
+    "AccessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InJhbTEiLCJpYXQiOjE2NTk2MDE2NTEsImV4cCI6MTY1OTYwMTg1MX0.CXhGnfBTmYE-0vG11Wzyf-oqDGodmW0IwR9cQh7gO84"
 }
-- You get accessToken with help access Token you can create Token
-- Same as Engineer register himself but he can login when ADMIN approved him then he login himself
+```
+### Engineer 
+- Signup 
+``` 
+localhost:8081/crm/app/v1/auth/signup
+Sample request body :
+{
+        "name" : "Hanuman Singh",
+        "userId" : "hanuman07",
+        "email" : "hanuman07@gmail.com",
+        "password" : "welcom@A7",
+        "userType" : "ENGINEER"
+}
+Sample response body :
+{
+    "name": "Hanuman Singh",
+    "userId": "hanuman07",
+    "email": "hanuman07@gmail.com",
+    "userType": "ENGINEER",
+    "userStatus": "PENDING"
+}
+```
+- Signin 
+```
+localhost:8081/crm/app/v1/auth/signin
+Sample request body :
+{
+   "email" : "hanuman07@gmail.com",
+    "password" : "welcom@A7"
+}
+Sample response body :
+{
+    "message": "You are approved for login"
+}
+```
+-> When ADMIN APPROVED Engineer then he can login
 
-## Ticket
-- create ticket
+```
+Admin update userStatus with AccessToken
+localhost:8081/crm/app/v1/auth/users/hanuman07
 {
-    "title" : "my love",
-    "description" : " you never love me its one side love "
+    "name": "Hanuman Singh",
+    "userId": "hanuman07",
+    "email": "hanuman07@gmail.com",
+    "userType": "ENGINEER",
+    "userStatus": "APPROVED"
 }
-
-- Response from server
+```
+### Ticket
+Pass accessToken in header
+```
+localhost:8081/crm/api/v1/tickets
+Sample request body :
 {
-    "title": "my love",
+    "title" : " bad product ",
+    "description" : " i want to return by headphone "
+}
+Sample response body :
+{
+    "title": " bad product ",
     "ticketPriority": 4,
-    "description": " you never love me its one side love ",
+    "description": " i want to return by headphone ",
     "status": "OPEN",
-    "reporter": "ram",
-    "assignee": "ram2",
-    "_id": "62ea706341725dae26dc7463",
-    "createdAt": "2022-08-03T12:56:03.174Z",
-    "updatedAt": "2022-08-03T12:56:03.174Z"
+    "reporter": "ram1",
+    "assignee": "hanuman07",
+    "_id": "62eb886d584bef13120046c0",
+    "createdAt": "2022-08-04T08:50:53.058Z",
+    "updatedAt": "2022-08-04T08:50:53.058Z"
 }
+```
+## Development
+Want to improve? Great! Make the changes and raise a PR. Reach out to me over ajay7yadav95@gmail.com
