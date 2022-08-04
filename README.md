@@ -107,7 +107,7 @@ Sample request body :
 }
 Sample response body :
 {
-    "message": "You are approved for login"
+    "message": "You are not approved for login"
 }
 ```
 -> When ADMIN APPROVED Engineer then he can login
