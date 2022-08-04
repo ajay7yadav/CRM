@@ -42,19 +42,28 @@ const verifyUpdateCheck = async(req, res, next)=>{
     * 
     *    1. Only ADMIN should be allowed to do this change
     */
-   
-   if(req.body.assignee != undefined){
-        let newAssignee =  await User.findOne({userId : req.body.assignee});
+   if(req.body.assignee != undefined && ticket.assignee !== req.body.assignee){
 
-        if(!newAssignee){
-            return res.status(401).send({
-                message : "Engineer userId passed as assignee is wrong"
+        if( user.userType == constants.userType.admin){
+            let newAssignee =  await User.findOne({userId : req.body.assignee});
+
+            if(!newAssignee){
+                return res.status(401).send({
+                    message : "Engineer userId passed as assignee is wrong"
+                });
+            }
+            if(newAssignee.userStatus == constants.userStatus.pending){
+                return res.status(401).send({
+                    message : "Engineer is not approved !"
+                });
+            }
+        }else{
+            return res.status(403).send({
+                message : "Only ADMIN  | OWner of ticket is allowed to re-assign a ticket"
             });
-        }
-        // return res.status(403).send({
-        //     message : "Only ADMIN  | OWner of ticket is allowed to re-assign a ticket"
-        // });     
+        }  
    }
+
    next();
 }
 module.exports = {

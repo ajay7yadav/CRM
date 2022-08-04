@@ -69,7 +69,7 @@ exports.createTicket = async(req, res)=>{
             // Now we should send the notification request to notification Service
             // rich the content of the email content
             //                        subject with id                          content to sent          recepients || current user || engineer || admin           who sent request        
-            sendNotificationReq(`Ticket created with id : ${tickets._id}` , "CRM ticket has been booked",`${customer.email},${assigneTo.email},ajay7yadav95@gmail.com`, "CRM APP");
+            //sendNotificationReq(`Ticket created with id : ${tickets._id}` , "CRM ticket has been booked",`${customer.email},${assigneTo.email},ajay7yadav95@gmail.com`, "CRM APP");
             res.status(201).send(tickets);
         }
     }catch(err){
