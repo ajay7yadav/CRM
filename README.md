@@ -26,17 +26,24 @@ The whole repo is divided into multiple branches. Each branch contains code for 
 - Understanding of Async Await
 - Mongo DB locally installed and running
 
-### Tech
-- Node.js
-- MongoDB
+## 🛠 Tech
+**Client   :** Post-man
+**Server   :** Node, Express, JWT, node-rest-client
+**Database :** mongoDB
 - this app requires Node.js v14+ to run.
 
 ### Install the dependencies and devDependencies and start the server.
 Before starting the server please ensure mongodb server is locally installed and running on the default port
 
-- cd crm
-- npm install
-- npm run devStart
+```bash
+  cd crm
+```
+```bash
+  npm install
+```
+```bash
+  npm install
+```
 
 ## REST endpoints
 ### Customer 
@@ -111,9 +118,8 @@ Sample response body :
 }
 ```
 -> When ADMIN APPROVED Engineer then he can login
-
-```
 Admin update userStatus with AccessToken
+```
 localhost:8081/crm/app/v1/auth/users/hanuman07
 {
     "name": "Hanuman Singh",
