@@ -1,7 +1,7 @@
 const Ticket = require('../models/ticket_m');
 const User = require('../models/auth_m');
 const constants = require('../util/constant');
-const sendNotificationReq = require('../util/notificationClient');
+
 /**
  * Method to create the logic of creating tickets
  * 
