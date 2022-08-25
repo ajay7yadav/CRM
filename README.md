@@ -27,19 +27,16 @@ The whole repo is divided into multiple branches. Each branch contains code for 
 - Mongo DB locally installed and running
 
 ## 🛠 Tech
-**Client   :** Post-man
-**Server   :** Node, Express, JWT, node-rest-client
-**Database :** mongoDB
-- this app requires Node.js v14+ to run.
+- **Client   :** Post-man,
+- **Server   :** Node, Express, JWT, node-rest-client, JWT, bcryptjs
+- **Database :** mongoDB
+- This app. requires Node.js v14+ to run.
 
 ### Install the dependencies and devDependencies and start the server.
 Before starting the server please ensure mongodb server is locally installed and running on the default port
 
 ```bash
   cd crm
-```
-```bash
-  npm install
 ```
 ```bash
   npm install
